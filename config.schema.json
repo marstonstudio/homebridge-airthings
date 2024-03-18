@@ -36,6 +36,16 @@
         "type": "boolean",
         "required": false
       },
+      "humidityServiceDisabled": {
+        "title": "Humidity Disabled from Reporting to Homekit",
+        "type": "boolean",
+        "required": false
+      },
+      "temperatureServiceDisabled": {
+        "title": "Temperature Disabled from Reporting to Homekit",
+        "type": "boolean",
+        "required": false
+      },
       "pm25AirQualityDisabled": {
         "title": "PM2.5 Disabled in Air Quality Sensor",
         "type": "boolean",

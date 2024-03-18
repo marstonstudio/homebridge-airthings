@@ -182,11 +182,11 @@ export class AirthingsPlugin implements AccessoryPlugin {
   getServices(): Service[] {
     const services = [this.informationService, this.batteryService, this.airQualityService];
 
-    if (this.airthingsDevice.sensors.temp) {
+    if (this.airthingsDevice.sensors.temp && !this.airthingsConfig.temperatureServiceDisabled) {
       services.push(this.temperatureService);
     }
 
-    if (this.airthingsDevice.sensors.humidity) {
+    if (this.airthingsDevice.sensors.humidity && !this.airthingsConfig.humidityServiceDisabled) {
       services.push(this.humidityService);
     }
 
@@ -269,25 +269,29 @@ export class AirthingsPlugin implements AccessoryPlugin {
     );
 
     // HomeKit Temperature Service
-    if (this.latestSamples.data.temp) {
-      this.temperatureService.getCharacteristic(api.hap.Characteristic.CurrentTemperature).updateValue(this.latestSamples.data.temp);
-      this.temperatureService.getCharacteristic(api.hap.Characteristic.StatusActive).updateValue(true);
-    }
-    else {
-      this.temperatureService.getCharacteristic(api.hap.Characteristic.StatusActive).updateValue(
-        this.latestSamples.data.time != undefined && Date.now() / 1000 - this.latestSamples.data.time < 2 * 60 * 60
-      );
+    if (!this.airthingsConfig.temperatureServiceDisabled) {
+      if (this.latestSamples.data.temp) {
+        this.temperatureService.getCharacteristic(api.hap.Characteristic.CurrentTemperature).updateValue(this.latestSamples.data.temp);
+        this.temperatureService.getCharacteristic(api.hap.Characteristic.StatusActive).updateValue(true);
+      }
+      else {
+        this.temperatureService.getCharacteristic(api.hap.Characteristic.StatusActive).updateValue(
+          this.latestSamples.data.time != undefined && Date.now() / 1000 - this.latestSamples.data.time < 2 * 60 * 60
+        );
+      }
     }
 
     // HomeKit Humidity Service
-    if (this.latestSamples.data.humidity) {
-      this.humidityService.getCharacteristic(api.hap.Characteristic.CurrentRelativeHumidity).updateValue(this.latestSamples.data.humidity);
-      this.humidityService.getCharacteristic(api.hap.Characteristic.StatusActive).updateValue(true);
-    }
-    else {
-      this.humidityService.getCharacteristic(api.hap.Characteristic.StatusActive).updateValue(
-        this.latestSamples.data.time != undefined && Date.now() / 1000 - this.latestSamples.data.time < 2 * 60 * 60
-      );
+    if (!this.airthingsConfig.humidityServiceDisabled) {
+      if (this.latestSamples.data.humidity) {
+        this.humidityService.getCharacteristic(api.hap.Characteristic.CurrentRelativeHumidity).updateValue(this.latestSamples.data.humidity);
+        this.humidityService.getCharacteristic(api.hap.Characteristic.StatusActive).updateValue(true);
+      }
+      else {
+        this.humidityService.getCharacteristic(api.hap.Characteristic.StatusActive).updateValue(
+          this.latestSamples.data.time != undefined && Date.now() / 1000 - this.latestSamples.data.time < 2 * 60 * 60
+        );
+      }
     }
 
     // HomeKit CO2 Service
@@ -411,6 +415,8 @@ interface AirthingsPluginConfig extends AccessoryConfig {
   serialNumber?: string;
   co2AirQualityDisabled?: boolean;
   humidityAirQualityDisabled?: boolean;
+  humidityServiceDisabled?: boolean;
+  temperatureServiceDisabled?: boolean;
   pm25AirQualityDisabled?: boolean;
   radonAirQualityDisabled?: boolean;
   vocAirQualityDisabled?: boolean;

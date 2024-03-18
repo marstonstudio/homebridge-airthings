@@ -1,6 +1,6 @@
 {
-  "name": "homebridge-airthings",
-  "displayName": "Homebridge Airthings",
+  "name": "homebridge-airthings-marston",
+  "displayName": "Homebridge Airthings Marston",
   "version": "1.1.0",
   "description": "A Homebridge plugin for Airthings air quality monitors via the Airthings Consumer API.",
   "keywords": [
@@ -8,9 +8,9 @@
     "homebridge",
     "homebridge-plugin"
   ],
-  "homepage": "https://github.com/michaelahern/homebridge-airthings",
+  "homepage": "https://github.com/marstonstudio/homebridge-airthings",
   "bugs": {
-    "url": "http://github.com/michaelahern/homebridge-airthings/issues"
+    "url": "https://github.com/marstonstudio/homebridge-airthings/issues"
   },
   "license": "ISC",
   "author": "Michael Ahern <michael.ahern@gmail.com>",
@@ -25,7 +25,7 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/michaelahern/homebridge-airthings.git"
+    "url": "git://github.com/marstonstudio/homebridge-airthings.git"
   },
   "scripts": {
     "eslint": "eslint src/**.ts --max-warnings=0",
