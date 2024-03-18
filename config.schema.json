@@ -135,6 +135,8 @@
       "items": [
         {
           "items": [
+            "humidityServiceDisabled",
+            "temperatureServiceDisabled",
             "debug",
             "refreshInterval",
             "tokenScope"
